@@ -40,7 +40,8 @@ Desenvolver um sistema inteligente que automatiza a criação de testes para sof
 
 - Agente Orquestrador: Coordena todos os agentes e consolida os testes gerados.
 
-## 🧱 Tecnologias Pretendidas
+## 🧱 Tecnologias 
+- Analisador de Código - Java, JavaParser
 - Linguagem de programação
 - Bibliotecas e frameworks
 - Ferramentas para teste, simulação, visualização, etc.
@@ -108,22 +109,11 @@ Agente Orquestrador consolida e entrega:
 
 - Produz um relatório com métricas de cobertura e sugestões.
 
-## 🗂️ Organização e Planejamento do Projeto
-O progresso deste projeto será monitorado através do **GitHub Projects**.
-
-> Acesse a aba "Projects" do repositório para acompanhar:
-- Tarefas pendentes
-- Tarefas em andamento
-- Tarefas concluídas
-
-Cada integrante deve ser responsável por pelo menos uma tarefa no quadro.
-Use etiquetas (labels) e comentários para detalhar o andamento e as decisões.
-
 ## 📌 Status Inicial do Projeto
-- [ ] Ideia discutida e validada com o professor
-- [ ] Estrutura básica do repositório criada
-- [ ] Quadro no GitHub Projects criado
-- [ ] Primeiras tarefas definidas e atribuídas
+- [X] Ideia discutida e validada com o professor
+- [X] Estrutura básica do repositório criada
+- [X] Quadro no GitHub Projects criado
+- [X] Primeiras tarefas definidas e atribuídas
 
 ## 📄 Documentação Futura
 Este repositório poderá incluir:
@@ -132,11 +122,3 @@ Este repositório poderá incluir:
 - Scripts de testes ou simulações
 - Resultados e conclusões finais
 
-## 👨‍🏫 Acompanhamento pelo Professor
-Para que o professor possa acompanhar e orientar o andamento do projeto, **adicione o usuário `igorbarcosta` como colaborador do repositório.**
-
-### Como fazer:
-1. Vá até a aba **"Settings"** do seu repositório.
-2. Clique em **"Collaborators"** no menu lateral.
-3. Digite o nome de usuário: `igorbarcosta`
-4. Clique em **"Add collaborator"** e confirme.

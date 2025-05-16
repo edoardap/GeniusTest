@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="LLMSettingsState">
+    <option name="currentLLMPlatformName" value="HuggingFace" />
+    <option name="huggingFaceModel" value="Meta-Llama-3-8B-Instruct" />
+  </component>
+</project>

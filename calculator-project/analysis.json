@@ -1,0 +1,166 @@
+[
+  {
+    "brief": "public static void main(String[] args) throws IOException {\n    // caminho relativo do projeto Java\n    String projectPath \u003d \"src/main/java\";\n    SourceRoot sourceRoot \u003d new SourceRoot(Paths.get(projectPath));\n    List\u003cCompilationUnit\u003e units \u003d sourceRoot.tryToParse().stream().filter(r -\u003e r.getResult().isPresent()).map(r -\u003e r.getResult().get()).toList();\n    List\u003cMap\u003cString, Object\u003e\u003e analysisResults \u003d new ArrayList\u003c\u003e();\n    for (CompilationUnit cu : units) {\n        cu.findAll(ClassOrInterfaceDeclaration.class).forEach(cls -\u003e {\n            String className \u003d cls.getNameAsString();\n            cls.getMethods().forEach(method -\u003e {\n                Map\u003cString, Object\u003e methodInfo \u003d new HashMap\u003c\u003e();\n                methodInfo.put(\"className\", className);\n                methodInfo.put(\"methodName\", method.getNameAsString());\n                methodInfo.put(\"brief\", method.toString());\n                methodInfo.put(\"methodSignature\", method.getDeclarationAsString(false, false, false));\n                methodInfo.put(\"sourceCode\", method.toString());\n                // não implementado ainda\n                methodInfo.put(\"useField\", false);\n                methodInfo.put(\"isConstructor\", method.isConstructorDeclaration());\n                methodInfo.put(\"isGetSet\", method.getNameAsString().startsWith(\"get\") || method.getNameAsString().startsWith(\"set\"));\n                methodInfo.put(\"isPublic\", method.isPublic());\n                methodInfo.put(\"isBoolean\", method.getType().asString().equals(\"boolean\"));\n                methodInfo.put(\"isAbstract\", method.isAbstract());\n                // Parâmetros\n                List\u003cString\u003e params \u003d new ArrayList\u003c\u003e();\n                method.getParameters().forEach(p -\u003e params.add(p.toString()));\n                methodInfo.put(\"parameters\", params);\n                methodInfo.put(\"dependentMethods\", new HashMap\u003c\u003e());\n                methodInfo.put(\"full_method_info\", method.toString());\n                // Comentário\n                Optional\u003cComment\u003e comment \u003d method.getComment();\n                methodInfo.put(\"method_comment\", comment.map(Comment::getContent).orElse(\"\"));\n                // Anotação\n                List\u003cString\u003e annotations \u003d new ArrayList\u003c\u003e();\n                for (AnnotationExpr annotation : method.getAnnotations()) {\n                    annotations.add(annotation.toString());\n                }\n                methodInfo.put(\"method_annotation\", String.join(\"\\n\", annotations));\n                analysisResults.add(methodInfo);\n            });\n        });\n    }\n    // Salvar como JSON\n    Gson gson \u003d new GsonBuilder().setPrettyPrinting().create();\n    try (FileWriter writer \u003d new FileWriter(\"analysis.json\")) {\n        gson.toJson(analysisResults, writer);\n    }\n    System.out.println(\"Análise concluída! Arquivo salvo como analysis.json\");\n}",
+    "isGetSet": false,
+    "method_annotation": "",
+    "useField": false,
+    "methodName": "main",
+    "className": "JavaCodeAnalyzer",
+    "isAbstract": false,
+    "sourceCode": "public static void main(String[] args) throws IOException {\n    String projectPath \u003d \"src/main/java\";\n    SourceRoot sourceRoot \u003d new SourceRoot(Paths.get(projectPath));\n    List\u003cCompilationUnit\u003e units \u003d sourceRoot.tryToParse().stream().filter(r -\u003e r.getResult().isPresent()).map(r -\u003e r.getResult().get()).toList();\n    List\u003cMap\u003cString, Object\u003e\u003e analysisResults \u003d new ArrayList\u003c\u003e();\n    for (CompilationUnit cu : units) {\n        cu.findAll(ClassOrInterfaceDeclaration.class).forEach(cls -\u003e {\n            String className \u003d cls.getNameAsString();\n            cls.getMethods().forEach(method -\u003e {\n                Map\u003cString, Object\u003e methodInfo \u003d new HashMap\u003c\u003e();\n                methodInfo.put(\"className\", className);\n                methodInfo.put(\"methodName\", method.getNameAsString());\n                methodInfo.put(\"brief\", method.toString());\n                methodInfo.put(\"methodSignature\", method.getDeclarationAsString(false, false, false));\n                methodInfo.put(\"sourceCode\", method.toString());\n                methodInfo.put(\"useField\", false);\n                methodInfo.put(\"isConstructor\", method.isConstructorDeclaration());\n                methodInfo.put(\"isGetSet\", method.getNameAsString().startsWith(\"get\") || method.getNameAsString().startsWith(\"set\"));\n                methodInfo.put(\"isPublic\", method.isPublic());\n                methodInfo.put(\"isBoolean\", method.getType().asString().equals(\"boolean\"));\n                methodInfo.put(\"isAbstract\", method.isAbstract());\n                List\u003cString\u003e params \u003d new ArrayList\u003c\u003e();\n                method.getParameters().forEach(p -\u003e params.add(p.toString()));\n                methodInfo.put(\"parameters\", params);\n                methodInfo.put(\"dependentMethods\", new HashMap\u003c\u003e());\n                methodInfo.put(\"full_method_info\", method.toString());\n                Optional\u003cComment\u003e comment \u003d method.getComment();\n                methodInfo.put(\"method_comment\", comment.map(Comment::getContent).orElse(\"\"));\n                List\u003cString\u003e annotations \u003d new ArrayList\u003c\u003e();\n                for (AnnotationExpr annotation : method.getAnnotations()) {\n                    annotations.add(annotation.toString());\n                }\n                methodInfo.put(\"method_annotation\", String.join(\"\\n\", annotations));\n                analysisResults.add(methodInfo);\n            });\n        });\n    }\n    Gson gson \u003d new GsonBuilder().setPrettyPrinting().create();\n    try (FileWriter writer \u003d new FileWriter(\"analysis.json\")) {\n        gson.toJson(analysisResults, writer);\n    }\n    System.out.println(\"Análise concluída! Arquivo salvo como analysis.json\");\n}",
+    "method_comment": "",
+    "isBoolean": false,
+    "dependentMethods": {},
+    "methodSignature": "void main(String[])",
+    "isConstructor": false,
+    "full_method_info": "public static void main(String[] args) throws IOException {\n    String projectPath \u003d \"src/main/java\";\n    SourceRoot sourceRoot \u003d new SourceRoot(Paths.get(projectPath));\n    List\u003cCompilationUnit\u003e units \u003d sourceRoot.tryToParse().stream().filter(r -\u003e r.getResult().isPresent()).map(r -\u003e r.getResult().get()).toList();\n    List\u003cMap\u003cString, Object\u003e\u003e analysisResults \u003d new ArrayList\u003c\u003e();\n    for (CompilationUnit cu : units) {\n        cu.findAll(ClassOrInterfaceDeclaration.class).forEach(cls -\u003e {\n            String className \u003d cls.getNameAsString();\n            cls.getMethods().forEach(method -\u003e {\n                Map\u003cString, Object\u003e methodInfo \u003d new HashMap\u003c\u003e();\n                methodInfo.put(\"className\", className);\n                methodInfo.put(\"methodName\", method.getNameAsString());\n                methodInfo.put(\"brief\", method.toString());\n                methodInfo.put(\"methodSignature\", method.getDeclarationAsString(false, false, false));\n                methodInfo.put(\"sourceCode\", method.toString());\n                methodInfo.put(\"useField\", false);\n                methodInfo.put(\"isConstructor\", method.isConstructorDeclaration());\n                methodInfo.put(\"isGetSet\", method.getNameAsString().startsWith(\"get\") || method.getNameAsString().startsWith(\"set\"));\n                methodInfo.put(\"isPublic\", method.isPublic());\n                methodInfo.put(\"isBoolean\", method.getType().asString().equals(\"boolean\"));\n                methodInfo.put(\"isAbstract\", method.isAbstract());\n                List\u003cString\u003e params \u003d new ArrayList\u003c\u003e();\n                method.getParameters().forEach(p -\u003e params.add(p.toString()));\n                methodInfo.put(\"parameters\", params);\n                methodInfo.put(\"dependentMethods\", new HashMap\u003c\u003e());\n                methodInfo.put(\"full_method_info\", method.toString());\n                Optional\u003cComment\u003e comment \u003d method.getComment();\n                methodInfo.put(\"method_comment\", comment.map(Comment::getContent).orElse(\"\"));\n                List\u003cString\u003e annotations \u003d new ArrayList\u003c\u003e();\n                for (AnnotationExpr annotation : method.getAnnotations()) {\n                    annotations.add(annotation.toString());\n                }\n                methodInfo.put(\"method_annotation\", String.join(\"\\n\", annotations));\n                analysisResults.add(methodInfo);\n            });\n        });\n    }\n    Gson gson \u003d new GsonBuilder().setPrettyPrinting().create();\n    try (FileWriter writer \u003d new FileWriter(\"analysis.json\")) {\n        gson.toJson(analysisResults, writer);\n    }\n    System.out.println(\"Análise concluída! Arquivo salvo como analysis.json\");\n}",
+    "isPublic": true,
+    "parameters": [
+      "String[] args"
+    ]
+  },
+  {
+    "brief": "public static void main(String[] args) {\n    Calculator calculator \u003d new Calculator();\n    System.out.println(\"Addition: \" + calculator.add(5, 3));\n    System.out.println(\"Multiplication: \" + calculator.multiply(4, 7));\n    System.out.println(\"Division: \" + calculator.divide(10, 2));\n    System.out.println(\"Power: \" + calculator.power(2, 5));\n    System.out.println(\"Square Root: \" + calculator.squareRoot(16));\n    System.out.println(\"Factorial: \" + calculator.factorial(5));\n}",
+    "isGetSet": false,
+    "method_annotation": "",
+    "useField": false,
+    "methodName": "main",
+    "className": "Main",
+    "isAbstract": false,
+    "sourceCode": "public static void main(String[] args) {\n    Calculator calculator \u003d new Calculator();\n    System.out.println(\"Addition: \" + calculator.add(5, 3));\n    System.out.println(\"Multiplication: \" + calculator.multiply(4, 7));\n    System.out.println(\"Division: \" + calculator.divide(10, 2));\n    System.out.println(\"Power: \" + calculator.power(2, 5));\n    System.out.println(\"Square Root: \" + calculator.squareRoot(16));\n    System.out.println(\"Factorial: \" + calculator.factorial(5));\n}",
+    "method_comment": "",
+    "isBoolean": false,
+    "dependentMethods": {},
+    "methodSignature": "void main(String[])",
+    "isConstructor": false,
+    "full_method_info": "public static void main(String[] args) {\n    Calculator calculator \u003d new Calculator();\n    System.out.println(\"Addition: \" + calculator.add(5, 3));\n    System.out.println(\"Multiplication: \" + calculator.multiply(4, 7));\n    System.out.println(\"Division: \" + calculator.divide(10, 2));\n    System.out.println(\"Power: \" + calculator.power(2, 5));\n    System.out.println(\"Square Root: \" + calculator.squareRoot(16));\n    System.out.println(\"Factorial: \" + calculator.factorial(5));\n}",
+    "isPublic": true,
+    "parameters": [
+      "String[] args"
+    ]
+  },
+  {
+    "brief": "public double add(double a, double b) {\n    return a + b;\n}",
+    "isGetSet": false,
+    "method_annotation": "",
+    "useField": false,
+    "methodName": "add",
+    "className": "Calculator",
+    "isAbstract": false,
+    "sourceCode": "public double add(double a, double b) {\n    return a + b;\n}",
+    "method_comment": "",
+    "isBoolean": false,
+    "dependentMethods": {},
+    "methodSignature": "double add(double, double)",
+    "isConstructor": false,
+    "full_method_info": "public double add(double a, double b) {\n    return a + b;\n}",
+    "isPublic": true,
+    "parameters": [
+      "double a",
+      "double b"
+    ]
+  },
+  {
+    "brief": "public double multiply(double a, double b) {\n    return a * b;\n}",
+    "isGetSet": false,
+    "method_annotation": "",
+    "useField": false,
+    "methodName": "multiply",
+    "className": "Calculator",
+    "isAbstract": false,
+    "sourceCode": "public double multiply(double a, double b) {\n    return a * b;\n}",
+    "method_comment": "",
+    "isBoolean": false,
+    "dependentMethods": {},
+    "methodSignature": "double multiply(double, double)",
+    "isConstructor": false,
+    "full_method_info": "public double multiply(double a, double b) {\n    return a * b;\n}",
+    "isPublic": true,
+    "parameters": [
+      "double a",
+      "double b"
+    ]
+  },
+  {
+    "brief": "public double divide(double a, double b) {\n    if (b \u003d\u003d 0) {\n        throw new ArithmeticException(\"Division by zero is not allowed.\");\n    }\n    return a / b;\n}",
+    "isGetSet": false,
+    "method_annotation": "",
+    "useField": false,
+    "methodName": "divide",
+    "className": "Calculator",
+    "isAbstract": false,
+    "sourceCode": "public double divide(double a, double b) {\n    if (b \u003d\u003d 0) {\n        throw new ArithmeticException(\"Division by zero is not allowed.\");\n    }\n    return a / b;\n}",
+    "method_comment": "",
+    "isBoolean": false,
+    "dependentMethods": {},
+    "methodSignature": "double divide(double, double)",
+    "isConstructor": false,
+    "full_method_info": "public double divide(double a, double b) {\n    if (b \u003d\u003d 0) {\n        throw new ArithmeticException(\"Division by zero is not allowed.\");\n    }\n    return a / b;\n}",
+    "isPublic": true,
+    "parameters": [
+      "double a",
+      "double b"
+    ]
+  },
+  {
+    "brief": "public double power(double base, double exponent) {\n    return Math.pow(base, exponent);\n}",
+    "isGetSet": false,
+    "method_annotation": "",
+    "useField": false,
+    "methodName": "power",
+    "className": "Calculator",
+    "isAbstract": false,
+    "sourceCode": "public double power(double base, double exponent) {\n    return Math.pow(base, exponent);\n}",
+    "method_comment": "",
+    "isBoolean": false,
+    "dependentMethods": {},
+    "methodSignature": "double power(double, double)",
+    "isConstructor": false,
+    "full_method_info": "public double power(double base, double exponent) {\n    return Math.pow(base, exponent);\n}",
+    "isPublic": true,
+    "parameters": [
+      "double base",
+      "double exponent"
+    ]
+  },
+  {
+    "brief": "public double squareRoot(double number) {\n    if (number \u003c 0) {\n        throw new ArithmeticException(\"Cannot calculate square root of a negative number.\");\n    }\n    return Math.sqrt(number);\n}",
+    "isGetSet": false,
+    "method_annotation": "",
+    "useField": false,
+    "methodName": "squareRoot",
+    "className": "Calculator",
+    "isAbstract": false,
+    "sourceCode": "public double squareRoot(double number) {\n    if (number \u003c 0) {\n        throw new ArithmeticException(\"Cannot calculate square root of a negative number.\");\n    }\n    return Math.sqrt(number);\n}",
+    "method_comment": "",
+    "isBoolean": false,
+    "dependentMethods": {},
+    "methodSignature": "double squareRoot(double)",
+    "isConstructor": false,
+    "full_method_info": "public double squareRoot(double number) {\n    if (number \u003c 0) {\n        throw new ArithmeticException(\"Cannot calculate square root of a negative number.\");\n    }\n    return Math.sqrt(number);\n}",
+    "isPublic": true,
+    "parameters": [
+      "double number"
+    ]
+  },
+  {
+    "brief": "public double factorial(int n) {\n    if (n \u003c 0) {\n        throw new IllegalArgumentException(\"Factorial is not defined for negative numbers.\");\n    }\n    double result \u003d 1;\n    for (int i \u003d 1; i \u003c\u003d n; i++) {\n        result *\u003d i;\n    }\n    return result;\n}",
+    "isGetSet": false,
+    "method_annotation": "",
+    "useField": false,
+    "methodName": "factorial",
+    "className": "Calculator",
+    "isAbstract": false,
+    "sourceCode": "public double factorial(int n) {\n    if (n \u003c 0) {\n        throw new IllegalArgumentException(\"Factorial is not defined for negative numbers.\");\n    }\n    double result \u003d 1;\n    for (int i \u003d 1; i \u003c\u003d n; i++) {\n        result *\u003d i;\n    }\n    return result;\n}",
+    "method_comment": "",
+    "isBoolean": false,
+    "dependentMethods": {},
+    "methodSignature": "double factorial(int)",
+    "isConstructor": false,
+    "full_method_info": "public double factorial(int n) {\n    if (n \u003c 0) {\n        throw new IllegalArgumentException(\"Factorial is not defined for negative numbers.\");\n    }\n    double result \u003d 1;\n    for (int i \u003d 1; i \u003c\u003d n; i++) {\n        result *\u003d i;\n    }\n    return result;\n}",
+    "isPublic": true,
+    "parameters": [
+      "int n"
+    ]
+  }
+]

@@ -41,12 +41,10 @@ Desenvolver um sistema inteligente que automatiza a criação de testes para sof
 - Agente Orquestrador: Coordena todos os agentes e consolida os testes gerados.
 
 ## 🧱 Tecnologias 
-- Analisador de Código - Java, JavaParser
-- Linguagem de programação
-- Bibliotecas e frameworks
-- Ferramentas para teste, simulação, visualização, etc.
+- Linguagem de Programação: Java
+- Análise de Código: JavaParser
+- Geração de Testes Automatizados: JUnit 5 e Mockito
 
-> Justifique, sempre que possível, **por que escolheu cada ferramenta**.
 
 ## 📦 Entradas e Saídas Esperadas
 Entradas (O que o sistema recebe):
